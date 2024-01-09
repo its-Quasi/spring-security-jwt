@@ -23,16 +23,13 @@ public class WebSecurityConfig{
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    return http.csrf(csrf -> csrf.disable())
-
-      //Privatizamos algunas rutas y permitimos solo las de login como publicas
+    return http
+      .csrf(csrf -> csrf.disable())
       .authorizeHttpRequests(authRq ->
         authRq
           .requestMatchers("/auth/**").permitAll()
           .anyRequest().authenticated()
       )
-
-      // ENTENDER ESTO
       .sessionManagement(sessionManager ->
         sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
       )
